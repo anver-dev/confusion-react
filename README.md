@@ -1,2 +1,2 @@
 # confusion-react
-This a code of tutorial by coursera page.
+Code developed based on the React course from Coursera
