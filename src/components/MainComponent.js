@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Navbar, NavbarBrand } from "reactstrap";
 import Menu from "./MenuComponent";
-import DishdetailComponent from "./DishdetailComponent";
+import DishDetail from "./DishdetailComponent";
 import { DISHES } from "../shared/dishes";
 
 // Container Component: responsible for the status of the application
@@ -31,9 +31,9 @@ class Main extends Component {
           dishes={this.state.dishes}
           onClick={(dishId) => this.onDishSelect(dishId)}
         />
-        <DishdetailComponent
+        <DishDetail
           dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}
-        ></DishdetailComponent>
+        ></DishDetail>
       </div>
     );
   }
