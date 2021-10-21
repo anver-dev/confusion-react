@@ -1,14 +1,5 @@
 import React, { Component } from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  ListGroup,
-  ListGroupItem,
-  ListGroupItemText,
-} from "reactstrap";
+import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
 class DishdetailComponent extends Component {
   constructor(props) {
@@ -16,47 +7,64 @@ class DishdetailComponent extends Component {
     this.state = {};
   }
 
-  render() {
-    const dishSelected = this.props.dish;
+  renderDish(dishSelected) {
+    return (
+      <div className="col-12 col-md-5 m-2">
+        <Card>
+          <CardImg
+            width="100%"
+            src={dishSelected.image}
+            alt={dishSelected.name}
+          />
+          <CardBody>
+            <CardTitle>{dishSelected.name}</CardTitle>
+            <CardText>{dishSelected.description}</CardText>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
 
-    let options = {
+  renderComments(comments) {
+    const options = {
       weekday: "long",
       year: "numeric",
       month: "short",
-      day: "numeric",
+      day: "2-digit",
     };
 
-    if (dishSelected != null) {
-      const comments = dishSelected.comments.map((comment) => {
-        let date = new Date(comment.date);
-        return (
-          <div>
-            <ListGroupItem>
-              -- {comment.author}, {date.toLocaleDateString("en-US", options)}
-              <ListGroupItemText className="p-2">{comment.comment}</ListGroupItemText>
-            </ListGroupItem>
-          </div>
-        );
-      });
+    console.log({ comments });
+    const listComments = comments.map((comment) => {
+      let date = new Date(comment.date);
       return (
-        <div className="row">
-          <div className="col-12 col-md-5 m-2">
-            <Card>
-              <CardImg
-                width="100%"
-                src={dishSelected.image}
-                alt={dishSelected.name}
-              />
-              <CardBody>
-                <CardTitle>{dishSelected.name}</CardTitle>
-                <CardText>{dishSelected.description}</CardText>
-              </CardBody>
-            </Card>
-          </div>
-          <div className="col-12 col-md-5 m-2">
-              <h3>Comments</h3>
-              <p>Imagine all the eatables, living in ConFusion!</p>
-            <ListGroup flush>{comments}</ListGroup>
+        <ul className="list-unstyled">
+          <li>
+            <p>
+              -- {comment.author}, {date.toLocaleDateString("en-US", options)}
+            </p>
+            <p>{comment.comment}</p>
+          </li>
+        </ul>
+      );
+    });
+
+    return (
+      <div className="col-12 col-md-5 m-2">
+        <h3>Comments</h3>
+        <p>Imagine all the eatables, living in ConFusion!</p>
+        {listComments}
+      </div>
+    );
+  }
+
+  render() {
+    let dishSelected = this.props.dish;
+    if (dishSelected != null) {
+      return (
+        <div className="container">
+          <div className="row">
+            {this.renderDish(dishSelected)}
+            {this.renderComments(dishSelected.comments)}
           </div>
         </div>
       );
